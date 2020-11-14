@@ -22,9 +22,11 @@ TBD
 TBD
 
 ## List of files
-- **.gitignore** - list of files and pathways to ignore
-- **01_webscraping.ipynb** - notebook of scraping and compiling data
-- **__init__.py** - file to direct to the functions folder
+- **archive** folder - scrap and backup files
+- **data** folder - datasets, corpora, and models
 - **functions** folder - python functions files
 	- **webscraping.py** - file with functions used in webscraping and data cleaning
-- **data** folder - datasets, corpora, and models
+- **.gitignore** - list of files and pathways to ignore
+- **01_webscraping.ipynb** - notebook of scraping and compiling data
+- **README.md** - this very file!
+- **__init__.py** - file to direct to the functions folder
