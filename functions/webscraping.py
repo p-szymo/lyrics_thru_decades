@@ -8,7 +8,7 @@ import re
 
 def yearly_top10s(
     url,
-    pattern=r'\s{1,2}(?:[1-9]|0[1-9]|10) [1-9][0-9]? ([\w\s\.,’“”\(\)\–\-]+) –•– ([A-Za-z\s,]+)'):
+    pattern=r'\s{1,2}(?:[1-9]|0[1-9]|10)\s[1-9][0-9]?\s([\w\s\.,’“”\(\)\–\-]+) –•– ([A-Za-z\s,]+)'):
     
     # convert webpage to soup object
     page = rq.get(url)
@@ -18,7 +18,7 @@ def yearly_top10s(
     p_tags = soup.find_all('p')
     
     # find instances with a list of top songs
-    weeks = [week.contents for week in p_tags if len(week.contents) > 80]
+    weeks = [week.contents for week in p_tags if len(week.contents) > 10]
     
     # pull important info and wrangle into better format
     weeks_updated = [[' ' + str(line) for line in week
