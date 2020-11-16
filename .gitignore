@@ -142,3 +142,6 @@ cython_debug/
 
 # backup notebooks
 *-Copy1.ipynb
+
+# API keys
+api_key.json
