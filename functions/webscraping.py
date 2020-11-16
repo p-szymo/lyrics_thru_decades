@@ -5,7 +5,11 @@ from bs4 import BeautifulSoup as bs
 # string manipulation
 import re
 
+# lyrics retrieval
+from lyricsgenius import Genius
 
+
+# find top 10 song titles and artists for each week in a year
 def yearly_top10s(
     url,
     pattern=r'\s{1,2}(?:[1-9]|0[1-9]|10)\s[1-9][0-9]?\s([\w\s\.,’“”\(\)\–\-]+) –•– ([A-Za-z\s,]+)'):
@@ -39,3 +43,20 @@ def yearly_top10s(
     unique_top10s = list(set(top10s))
     
     return unique_top10s
+
+# lyrics through genius.com
+def lyrics_grabber(access_token, search_term, base_url='https://genius.com'):
+
+    # instantiate genius object
+    genius = Genius(access_token)
+
+    # search for song
+    song = genius.search(search_term)
+
+    # find url for top hit
+    url_addon = song['hits'][0]['result']['path']
+
+    # retrieve lyrics
+    lyrics = genius.lyrics(base_url + url_addon)
+
+    return lyrics
