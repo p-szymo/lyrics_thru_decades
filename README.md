@@ -22,7 +22,7 @@ TBD
 TBD
 
 ## List of files
-- **archive** folder - scrap and backup files
+- **archives** folder - scrap and backup files
 - **data** folder - datasets, corpora, and models
 - **functions** folder - python functions files
 	- **webscraping.py** - file with functions used in webscraping and data cleaning
@@ -30,3 +30,21 @@ TBD
 - **01_webscraping.ipynb** - notebook of scraping and compiling data
 - **README.md** - this very file!
 - **__init__.py** - file to direct to the functions folder
+
+## Repo structure
+```
+.
+├── 01_webscraping.ipynb
+├── README.md
+├── __init__.py
+├── archives
+│   ├── 01_webscraping-BACKUP_2020-11-11_early_process-Copy1.ipynb
+│   ├── 01_webscraping-BACKUP_2020-11-11_early_process.ipynb
+│   └── 01_webscraping-BACKUP_2020-11-14_before-abandoning-selenium.ipynb
+├── data
+│   ├── api_keys.json
+│   └── lyrics_df.pkl
+└── functions
+    ├── __init__.py
+    └── webscraping.py
+```
