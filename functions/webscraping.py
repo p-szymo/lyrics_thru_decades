@@ -15,8 +15,7 @@ def soupify(url):
     soup = bs(page.content, 'html.parser')
     return soup
 
-# [\w\s\.,’“”\(\)\–\-:;//&]+
-# [1-9][0-9]?|D|re|100
+
 # find top 10 song titles and artists for each week in a year
 def yearly_top10s(
         url,
