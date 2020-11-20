@@ -99,3 +99,38 @@ def rescrape(url, **kwargs):
         [line for line in soup.find(**kwargs).contents if isinstance(line, str) if line.strip()]
 )
     return lyrics.strip()
+
+
+# separate double-songs
+def split_combos(df, ind):
+    
+    # split titles
+    first_title = df.loc[ind, 'title'].split(' / ')[0]
+    second_title = df.loc[ind, 'title'].split(' / ')[1]
+
+    # capture artist and year
+    artist = df.loc[ind, 'artist']
+    year = df.loc[ind, 'year']
+    
+    # overwrite row with first title
+    df.loc[ind, 'title'] = first_title
+    
+    # rescrape first title's lyrics (or NaN)
+    try:
+        df.loc[ind, 'lyrics'] = lyrics_grabber(access_token, f'{first_title} {artist}')
+    except:
+        df.loc[ind, 'lyrics'] = np.nan
+    
+    # rescrape second title's lyrics (or NaN)
+    try:
+        second_lyrics = lyrics_grabber(access_token, f'{second_title} {artist}')
+    except:
+        second_lyrics = np.nan
+        
+    # use info to make a dictionary
+    second_dict = {'year': year,
+                   'title': second_title,
+                   'artist': artist,
+                   'lyrics': second_lyrics}
+    
+    return second_dict
