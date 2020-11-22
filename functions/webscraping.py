@@ -100,6 +100,17 @@ def rescrape(url, **kwargs):
 )
     return lyrics.strip()
 
+def featuring(df, ind, access_token):
+
+    # capture main artist
+    main_artist = df.loc[ind, 'artist'].lower().split(' featuring ')[0]
+
+    # update search term
+    search_term = f"{df.loc[ind, 'title']} {main_artist}"
+
+    # rescrape
+    return lyrics_grabber(access_token, search_term)
+
 
 # separate double-songs
 def split_combos(df, ind):
