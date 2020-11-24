@@ -1,9 +1,9 @@
-# Music Lyrics Through the Years
+# Song Lyrics Through the Years
 
-#### *Note*: This project is in its early (webscraping) stages. 
+#### *Note*: This project is in its early (data cleaning) stages. 
 
 ## Summary
-After scraping top 10 music lyrics from [Top 40 Weekly](https://top40weekly.com/), I'll use natural language processing (NLP) techniques to analyze the form, structure, and word usage of six decades: 1960s, 1970s, 1980s, 1990s, 2000s, and 2010s.
+After scraping top 10 song lyrics from [Top 40 Weekly](https://top40weekly.com/) and [Genius](https://genius.com), I'll use natural language processing (NLP) techniques to analyze the form, structure, and word usage of six decades: 1960s, 1970s, 1980s, 1990s, 2000s, and 2010s.
 
 Through text processing, feature engineering, and exploratory data analysis, I hope to discover insights into how popular songwriting has changed (or stayed the same) throughout the years. I'll then create predictive models to provide further insight and confirm my findings during EDA.
 
