@@ -42,7 +42,8 @@ def yearly_top10s(
                       for line in week if re.match(pattern, line)]
                      for week in weeks_updated]
 
-    # delistify each week, excluding edge case songs that get captured outside of the top 10
+    # delistify each week, excluding edge case songs that get captured outside
+    # of the top 10
     top10s = [song for week in weekly_top10s for song in week if len(week) > 5]
 
     # only unique songs
@@ -87,7 +88,7 @@ def remove_n_lines(song, begin_n, end_n=0):
     num_lines = len(lines)
 
     # slice lines and rejoin
-    sliced_str = '\n'.join(lines[begin_n:num_lines-end_n])
+    sliced_str = '\n'.join(lines[begin_n:num_lines - end_n])
 
     return sliced_str
 
@@ -95,10 +96,10 @@ def remove_n_lines(song, begin_n, end_n=0):
 # an attempt at a catch-all rescraping function (not quite)
 def rescrape(url, **kwargs):
     soup = soupify(url)
-    lyrics = '\n'.join(
-        [line for line in soup.find(**kwargs).contents if isinstance(line, str) if line.strip()]
-)
+    lyrics = '\n'.join([line for line in soup.find(
+        **kwargs).contents if isinstance(line, str) if line.strip()])
     return lyrics.strip()
+
 
 def featuring(df, ind, access_token):
 
@@ -114,7 +115,7 @@ def featuring(df, ind, access_token):
 
 # separate double-songs
 def split_combos(df, ind):
-    
+
     # split titles
     first_title = df.loc[ind, 'title'].split(' / ')[0]
     second_title = df.loc[ind, 'title'].split(' / ')[1]
@@ -122,26 +123,66 @@ def split_combos(df, ind):
     # capture artist and year
     artist = df.loc[ind, 'artist']
     year = df.loc[ind, 'year']
-    
+
     # overwrite row with first title
     df.loc[ind, 'title'] = first_title
-    
+
     # rescrape first title's lyrics (or NaN)
     try:
-        df.loc[ind, 'lyrics'] = lyrics_grabber(access_token, f'{first_title} {artist}')
-    except:
+        df.loc[ind, 'lyrics'] = lyrics_grabber(
+            access_token, f'{first_title} {artist}')
+    except BaseException:
         df.loc[ind, 'lyrics'] = np.nan
-    
+
     # rescrape second title's lyrics (or NaN)
     try:
-        second_lyrics = lyrics_grabber(access_token, f'{second_title} {artist}')
-    except:
+        second_lyrics = lyrics_grabber(
+            access_token, f'{second_title} {artist}')
+    except BaseException:
         second_lyrics = np.nan
-        
+
     # use info to make a dictionary
     second_dict = {'year': year,
                    'title': second_title,
                    'artist': artist,
                    'lyrics': second_lyrics}
-    
+
     return second_dict
+
+
+def colon_killer(song, split_on=':', total_kill=False):
+
+    # convert to list
+    lines = song.split('\n')
+
+    # iterate over index and list of lines
+    for i, line in enumerate(lines):
+
+        # only perform on lines with target
+        if split_on in line:
+
+            # split using target
+            temp = line.split(split_on)
+
+            # string before target, as a list of words
+            temp_words = temp[0].split()
+
+            # if only one or two words
+            if len(temp_words) < 3:
+
+                # use only what is after the target (may be empty string)
+                lines[i] = temp[1]
+
+            # if 3 or more words precede target
+            else:
+
+                # remove 2 words preceding target if `total_kill=True`
+                if total_kill:
+                    lines[i] = ' '.join(temp_words[:-2]) + temp[1]
+
+                # otherwise skip it
+                else:
+                    continue
+
+    # convert back to string
+    return '\n'.join(lines)
