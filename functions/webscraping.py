@@ -101,6 +101,7 @@ def rescrape(url, **kwargs):
     return lyrics.strip()
 
 
+# rescrape by only using the main (non-featured) artist in the search
 def featuring(df, ind, access_token):
 
     # capture main artist
@@ -150,6 +151,7 @@ def split_combos(df, ind):
     return second_dict
 
 
+# remove words preceding colons
 def colon_killer(song, split_on=':', total_kill=False):
 
     # convert to list
@@ -186,3 +188,23 @@ def colon_killer(song, split_on=':', total_kill=False):
 
     # convert back to string
     return '\n'.join(lines)
+
+
+# remove artist names from lyrics (most likely requires everything to be lowercase)
+def artist_remover(df, ind, artist_col, lyrics_col):
+
+    # main artist and featured artist(s), as two strings
+    artists_full = df.loc[ind, artist_col].split(' featuring ')
+
+    # each name/word as its own string in a list
+    artists_split = [name for artist in artists_full for name in artist.split()]
+
+    # original lyrics
+    lyrics = df.loc[ind, lyrics_col]
+
+    # remove instances of those names in lyrics string
+    for name in artists_split:
+        lyrics = lyrics.replace(name, '')
+
+    # lyrics without leading or trailing whitepace
+    return lyrics.strip()
