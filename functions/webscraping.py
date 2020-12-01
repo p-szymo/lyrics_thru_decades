@@ -70,10 +70,10 @@ def lyrics_grabber(access_token, search_term, base_url='https://genius.com'):
     return lyrics
 
 
-# remove brackets and words within
+# remove brackets and asterisks and words within
 def remove_brackets(lyrics):
     try:
-        return re.sub(r'[\[\{].*?[\]\}]', '', lyrics).strip()
+        return re.sub(r'[\[\{\*].*?[\]\}\*]', '', lyrics).strip()
     except BaseException:
         return lyrics
 
