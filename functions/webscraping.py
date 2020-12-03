@@ -191,13 +191,16 @@ def colon_killer(song, split_on=':', total_kill=False):
 
 
 # remove artist names from lyrics (most likely requires everything to be lowercase)
-def artist_remover(df, ind, artist_col, lyrics_col):
+def artist_remover(df, ind, artist_col, lyrics_col, stopwords=None):
 
     # main artist and featured artist(s), as two strings
     artists_full = df.loc[ind, artist_col].split(' featuring ')
 
     # each name/word as its own string in a list
     artists_split = [name for artist in artists_full for name in artist.split()]
+
+    if stopwords:
+        artists_split = [word for word in artists_split if word not in stopwords]
 
     # original lyrics
     lyrics = df.loc[ind, lyrics_col]
